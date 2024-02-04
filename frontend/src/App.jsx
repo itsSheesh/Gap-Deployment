@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import Home from "./pages/home/Home";
-import Login from "./pages/login/login";
-import SignUp from "./pages/signup/signup";
+import Home from "./pages/home/Home.jsx";
+import Login from "./pages/login/Login.jsx";
+import SignUp from "./pages/signup/Signup.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
