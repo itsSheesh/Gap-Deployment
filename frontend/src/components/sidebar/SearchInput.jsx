@@ -16,7 +16,7 @@ const SearchInput = () => {
       toast.error("Enter at least 4 characters");
     } else {
       const conversation = conversations.find((c) =>
-      c.userName.toLowerCase().includes(search.toLowerCase())
+      c.userName.toLowerCase() === search.toLowerCase()
     );
     if (conversation) {
       setSelectedConversation(conversation);
