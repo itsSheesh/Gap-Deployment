@@ -3,11 +3,14 @@ import { IoSearchSharp } from "react-icons/io5";
 import useConversation from "../../zustand/useConversation";
 import useGetConversations from "../../hooks/useGetConversations";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import {SelectedConversation} from "../../context/SelectedConversaion"
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
   const { setSelectedConversation } = useConversation();
   const { conversations } = useGetConversations();
+  const {setIsSelectedConversation} = useContext(SelectedConversation)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +23,7 @@ const SearchInput = () => {
     );
     if (conversation) {
       setSelectedConversation(conversation);
+      setIsSelectedConversation(true)
       setSearch("");
     } else toast.error("User Not Found!");
     }
@@ -30,11 +34,11 @@ const SearchInput = () => {
       <input
         type="text"
         placeholder="Search for people..."
-        className="input input-bordered rounded-full"
+        className="input input-bordered rounded-lg flex-1"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button type="submit" className="btn btn-circle bg-blue-600 text-white">
+      <button type="submit" className="btn bg-blue-600 text-white">
         <IoSearchSharp className="w-5 h-5 outline-none" />
       </button>
     </form>

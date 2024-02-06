@@ -65,6 +65,7 @@ export const login = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 export const logout = (req, res) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
@@ -73,3 +74,24 @@ export const logout = (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const deleteAccount = async (req, res) => {
+  try {
+    const { userName, password } = req.query;
+    const user = await User.findOne({ userName });
+    const isValidPassword = await bcrypt.compare(
+      password,
+      user?.password || ""
+    );
+    if (!user || !isValidPassword) {
+      res.status(401).json({ message: "username or  password is incorrect!" });
+    }
+    await User.deleteOne({ userName });
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Account has been deleted successfully!" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// http://localhost:5000/api/auth/delete?userName=test1234&password=test1234

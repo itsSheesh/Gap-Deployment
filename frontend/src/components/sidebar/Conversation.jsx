@@ -1,14 +1,20 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/useConversation";
+import { useContext } from "react";
+import { SelectedConversation } from "../../context/SelectedConversaion";
 
 const Conversation = ({ conversation, lastIndex }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
 
+  const { setIsSelectedConversation } = useContext(SelectedConversation);
 
   const { onlineUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(conversation._id)
-
+  const onConversationClick = () => {
+    setSelectedConversation(conversation)
+    setIsSelectedConversation(true)
+  }
 
   return (
     <>
@@ -16,7 +22,7 @@ const Conversation = ({ conversation, lastIndex }) => {
         className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
       ${isSelected ? "bg-sky-500" : ""}
       `}
-        onClick={() => setSelectedConversation(conversation)}
+        onClick={onConversationClick}
       >
         <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 rounded-full ">

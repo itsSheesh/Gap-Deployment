@@ -4,24 +4,32 @@ import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useAuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import {SelectedConversation} from "../../context/SelectedConversaion";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const MessageContainer = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
-
+  const {isSelectedConversation, setIsSelectedConversation } = useContext(SelectedConversation);
+  const handleBack = () => {
+    setIsSelectedConversation(false)
+  }
   useEffect(() => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
   return (
-    <div className="md:min-w-[450px] flex flex-col">
-      {!selectedConversation ? (
+    <div className={` flex-1  flex-col ${!isSelectedConversation ? "hidden sm:flex" : "flex"}`}>
+      {!selectedConversation && !selectedConversation ? (
         <NoChatSelected />
       ) : (
         <>
           <div className="bg-slate-500 px-4 py-2 mb-2 flex items-center justify-between">
+            
             <div className="flex items-center gap-3">
+            <FaArrowLeftLong className="cursor-pointer hover:text-blue-500" onClick={handleBack} />
               <img
                 src={selectedConversation.profilePic}
-                className="w-10"
+                className="w-10 h-[50px]"
                 alt="profile picture"
               />
               <span className="text-gray-900 flex items-center font-bold">

@@ -2,41 +2,42 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 
-const useLogin = () => {
+const useDeleteAccount = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
-
-  const login = async (userName, password) => {
+  const deleteAccount = async (userName, password) => {
     const success = handleInputErrors({
       userName,
       password,
     });
-    if (!success) toast.error("username or password is incorrect");
+    if (!success) return;
 
     setLoading(true);
     try {
-      const res = await fetch("api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userName, password }),
-      });
+      const res = await fetch(
+        `api/auth/delete?userName=${userName}&password=${password}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       const data = await res.json();
       if (data.error) {
         throw new Error(data.error);
       }
-      localStorage.setItem("user-info", JSON.stringify(data));
-      setAuthUser(data);
-      toast.success("Logged In Successfully");
+      localStorage.removeItem("user-info");
+      setAuthUser(null);
+      toast.success("Account Deleted successfully");
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
-  return { loading, login };
+  return { loading, deleteAccount };
 };
 
-export default useLogin;
+export default useDeleteAccount;
 
 function handleInputErrors({ userName, password }) {
   if (!userName || !password) {

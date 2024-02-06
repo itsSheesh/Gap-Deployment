@@ -3,10 +3,12 @@ import MessageContainer from "../../components/messages/MessageContainer";
 
 const Home = () => {
   return (
-    <div className="flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-black">
-        <Sidebar />
-        <MessageContainer />
-    </div>
+    <>
+      <div className="flex h-screen w-full sm:h-[800px] rounded-lg overflow-hidden bg-black">
+          <Sidebar />
+          <MessageContainer />
+      </div>
+    </>
   );
 };
 
