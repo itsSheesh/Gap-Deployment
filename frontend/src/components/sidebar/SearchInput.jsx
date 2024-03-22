@@ -1,33 +1,32 @@
 import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import useConversation from "../../zustand/useConversation";
-import useGetConversations from "../../hooks/useGetConversations";
+import useGetAllUsers from "../../hooks/useGetAllUsers";
 import toast from "react-hot-toast";
 import { useContext } from "react";
-import {SelectedConversation} from "../../context/SelectedConversaion"
+import { SelectedConversation } from "../../context/SelectedConversaion";
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
   const { setSelectedConversation } = useConversation();
-  const { conversations } = useGetConversations();
-  const {setIsSelectedConversation} = useContext(SelectedConversation)
+  const { users } = useGetAllUsers();
+  const { setIsSelectedConversation } = useContext(SelectedConversation);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!search) return;
-    if (search.length < 3) {
+    if (search.length < 4) {
       toast.error("Enter at least 4 characters");
     } else {
-      const conversation = conversations.find((c) =>
-      c.userName.toLowerCase() === search.toLowerCase()
-    );
-    if (conversation) {
-      setSelectedConversation(conversation);
-      setIsSelectedConversation(true)
-      setSearch("");
-    } else toast.error("User Not Found!");
+      const conversation = users.find(
+        (c) => c.userName.toLowerCase() === search.toLowerCase()
+      );
+      if (conversation) {
+        setSelectedConversation(conversation);
+        setIsSelectedConversation(true);
+        setSearch("");
+      } else toast.error("User Not Found!");
     }
-    
   };
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">

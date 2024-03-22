@@ -93,5 +93,3 @@ export const deleteAccount = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-// http://localhost:5000/api/auth/delete?userName=test1234&password=test1234

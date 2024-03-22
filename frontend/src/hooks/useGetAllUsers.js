@@ -1,30 +1,30 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const useGetConversations = () => {
+const useGetAllUsers = () => {
   const [loading, setLoading] = useState(false);
-  const [conversations, setConversaions] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const getConversations = async () => {
+    const getUsers = async () => {
       setLoading(true);
       try {
-        const res = await fetch("api/users/forsidebar");
+        const res = await fetch("api/users/all");
         const data = await res.json();
         if (data.error) {
           throw new Error(data.error);
         }
-        setConversaions(data);
+        setUsers(data);
       } catch (error) {
         toast.error(error.message);
       } finally {
         setLoading(false);
       }
     };
-    getConversations();
+    getUsers();
   }, []);
 
-  return { loading, conversations };
+  return { loading, users };
 };
 
-export default useGetConversations;
+export default useGetAllUsers;
