@@ -1,13 +1,15 @@
 import { createContext, useState } from "react";
 
-export const SelectedConversation = createContext();
+const ConversationContext = createContext();
 
 export const SelectedConversationProvider = ({ children }) => {
     const [isSelectedConversation, setIsSelectedConversation] = useState(false);
 
     return (
-        <SelectedConversation.Provider value={{isSelectedConversation, setIsSelectedConversation}}>
+        <ConversationContext.Provider value={{isSelectedConversation, setIsSelectedConversation}}>
             {children}
-        </SelectedConversation.Provider>
+        </ConversationContext.Provider>
     )
 };
+
+export default ConversationContext

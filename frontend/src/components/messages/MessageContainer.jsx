@@ -5,12 +5,12 @@ import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useAuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
-import {SelectedConversation} from "../../context/SelectedConversaion";
+import ConversationContext from "../../context/ConversationContext";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const MessageContainer = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
-  const {isSelectedConversation, setIsSelectedConversation } = useContext(SelectedConversation);
+  const {isSelectedConversation, setIsSelectedConversation } = useContext(ConversationContext);
   const handleBack = () => {
     setIsSelectedConversation(false)
   }

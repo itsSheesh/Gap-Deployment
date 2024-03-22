@@ -3,10 +3,10 @@ import DeleteButton from "./sidebar/DeleteButton";
 import LogoutButton from "./sidebar/LogoutButton";
 import SearchInput from "./sidebar/SearchInput";
 import { useContext } from "react";
-import { SelectedConversation } from "../context/SelectedConversaion";
+import  ConversationContext  from "../context/ConversationContext";
 
 const Sidebar = () => {
-  const {isSelectedConversation} = useContext(SelectedConversation);
+  const {isSelectedConversation} = useContext(ConversationContext);
 
   return (
     <div className={`flex-1 sm:max-w-[400px] ${isSelectedConversation ? "hidden sm:flex" : "flex sm:border-r sm:max-w-[400px]"} border-slate-600 p-4 flex-col`}>

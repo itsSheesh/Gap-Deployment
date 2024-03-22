@@ -4,13 +4,13 @@ import useConversation from "../../zustand/useConversation";
 import useGetAllUsers from "../../hooks/useGetAllUsers";
 import toast from "react-hot-toast";
 import { useContext } from "react";
-import { SelectedConversation } from "../../context/SelectedConversaion";
+import  ConversationContext  from "../../context/ConversationContext";
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
   const { setSelectedConversation } = useConversation();
   const { users } = useGetAllUsers();
-  const { setIsSelectedConversation } = useContext(SelectedConversation);
+  const { setIsSelectedConversation } = useContext(ConversationContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
