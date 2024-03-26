@@ -1,31 +1,25 @@
 import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
-import useConversation from "../../zustand/useConversation";
 import useGetAllUsers from "../../hooks/useGetAllUsers";
 import toast from "react-hot-toast";
 import { useContext } from "react";
-import  ConversationContext  from "../../context/ConversationContext";
+import ConversationContext from "../../context/ConversationContext";
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
-  const { setSelectedConversation } = useConversation();
-  const { users } = useGetAllUsers();
+  const { getUsers } = useGetAllUsers();
+  
   const { setIsSelectedConversation } = useContext(ConversationContext);
-
-  const handleSubmit = (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
     if (!search) return;
     if (search.length < 4) {
       toast.error("Enter at least 4 characters");
     } else {
-      const conversation = users.find(
-        (c) => c.userName.toLowerCase() === search.toLowerCase()
-      );
-      if (conversation) {
-        setSelectedConversation(conversation);
-        setIsSelectedConversation(true);
-        setSearch("");
-      } else toast.error("User Not Found!");
+      getUsers(search);
+
+      setIsSelectedConversation(true);
+      setSearch("");
     }
   };
   return (

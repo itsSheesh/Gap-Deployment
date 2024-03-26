@@ -1,15 +1,21 @@
 import { useState } from "react";
 import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 const useSendMessage = () => {
+  const {authUser} = useAuthContext();
+  const me = authUser._id
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
-
+  const otherUserId = selectedConversation.participants.find(
+    (participant => participant._id !== me)
+  )
+  
   const sendMessage = async (message) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
+      const res = await fetch(`/api/messages/send/${otherUserId._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

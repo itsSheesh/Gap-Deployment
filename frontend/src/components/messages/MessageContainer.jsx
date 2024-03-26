@@ -9,8 +9,14 @@ import ConversationContext from "../../context/ConversationContext";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const MessageContainer = () => {
+  const {authUser} = useAuthContext();
   const { selectedConversation, setSelectedConversation } = useConversation();
   const {isSelectedConversation, setIsSelectedConversation } = useContext(ConversationContext);
+  const me = authUser._id
+  
+  const otherParticipant = selectedConversation?.participants.find(
+    (participant) => participant._id !== me
+  )
   const handleBack = () => {
     setIsSelectedConversation(false)
   }
@@ -28,16 +34,16 @@ const MessageContainer = () => {
             <div className="flex items-center gap-3">
             <FaArrowLeftLong className="cursor-pointer hover:text-blue-500" onClick={handleBack} />
               <img
-                src={selectedConversation.profilePic}
+                src={otherParticipant.profilePic}
                 className="w-10 h-[50px]"
                 alt="profile picture"
               />
               <span className="text-gray-900 flex items-center font-bold">
-                {selectedConversation.fullName}
+                {otherParticipant.fullName}
               </span>
             </div>
 
-            <span>({selectedConversation.userName})</span>
+            <span>({otherParticipant.userName})</span>
           </div>
           <Messages />
           <MessageInput />
